@@ -22,7 +22,8 @@ def check_fio_version(settings):
     if "fio-3" in result:
         return True
     elif "fio-2" in result:
-        print(f"Your Fio version ({result}) is not compatible. Please use Fio-3.x")
+        print(
+            f"Your Fio version ({result}) is not compatible. Please use Fio-3.x")
         sys.exit(1)
     else:
         print("Could not detect Fio version.")
@@ -38,7 +39,7 @@ def run_raw_command(command, env=None):
     result = subprocess.run(
         command, shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env
     )
-    if result.returncode > 0 or (len(str(result.stderr)) > 3):
+    if result.returncode > 0:
         stdout = result.stdout.decode("UTF-8").strip()
         stderr = result.stderr.decode("UTF-8").strip()
         print(f"\nAn error occurred: {stderr} - {stdout}")
@@ -51,7 +52,8 @@ def run_command(settings, benchmark, command):
     """This command sets up the environment that is used in conjunction
     with the Fio .ini job file.
     """
-    output_directory = supporting.generate_output_directory(settings, benchmark)
+    output_directory = supporting.generate_output_directory(
+        settings, benchmark)
     env = os.environ
     settings = supporting.convert_dict_vals_to_str(settings)
     benchmark = supporting.convert_dict_vals_to_str(benchmark)
@@ -62,7 +64,8 @@ def run_command(settings, benchmark, command):
 
 
 def run_fio(settings, benchmark):
-    output_directory = supporting.generate_output_directory(settings, benchmark)
+    output_directory = supporting.generate_output_directory(
+        settings, benchmark)
     output_file = f"{output_directory}/{benchmark['mode']}-{benchmark['iodepth']}-{benchmark['numjobs']}.json"
 
     command = [
@@ -74,8 +77,8 @@ def run_fio(settings, benchmark):
 
     command = supporting.expand_command_line(command, settings, benchmark)
 
-    target_parameter = checks.check_target_type(benchmark["target"], settings["type"])
-    command.append(f"{target_parameter}={benchmark['target']}")
+    # target_parameter = checks.check_target_type(benchmark["target"], settings["type"])
+    # command.append(f"{target_parameter}={benchmark['target']}")
 
     if not settings["dry_run"]:
         supporting.make_directory(output_directory)
@@ -91,7 +94,8 @@ def run_precondition_benchmark(settings, device, run):
         settings_copy = copy.deepcopy(settings)
         settings_copy["template"] = settings["precondition_template"]
 
-        template = supporting.import_fio_template(settings["precondition_template"])
+        template = supporting.import_fio_template(
+            settings["precondition_template"])
 
         benchmark = {
             "target": device,

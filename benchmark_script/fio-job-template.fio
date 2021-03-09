@@ -1,4 +1,9 @@
 [iotest]
+norandommap=1
+cpumask=1
+verify=0
+thread=1
+stonewall
 rw=${MODE}
 blocksize=${BLOCK_SIZE}
 ioengine=${ENGINE}
@@ -12,4 +17,10 @@ write_bw_log=${OUTPUT}/${MODE}-iodepth-${IODEPTH}-numjobs-${NUMJOBS}
 write_lat_log=${OUTPUT}/${MODE}-iodepth-${IODEPTH}-numjobs-${NUMJOBS}
 write_iops_log=${OUTPUT}/${MODE}-iodepth-${IODEPTH}-numjobs-${NUMJOBS}
 log_avg_msec=${LOGINTERVAL}
+# EBS gp2
+# filename=trtype=PCIe traddr=0000.00.1d.0 ns=1
+# EBS gp3
+filename=trtype=PCIe traddr=0000.00.1e.0 ns=1
+# NVMe
+# filename=trtype=PCIe traddr=0000.00.1f.0 ns=1
 

@@ -35,7 +35,7 @@ def get_arguments(settings):
         "-d",
         "--target",
         help="Storage device / directory / file to be tested",
-        required=True,
+        required=False,
         nargs="+",
         type=str,
     )
@@ -44,7 +44,7 @@ def get_arguments(settings):
         "--type",
         help="Target type, device, file or directory",
         choices=["device", "file", "directory"],
-        required=True,
+        required=False,
     )
     ag.add_argument(
         "-s",
@@ -279,5 +279,6 @@ def get_argument_description():
         "ss_dur": "Steady state rolling window",
         "ss_ramp": "Steady state rampup",
         "entire_device": "Benchmark entire device",
+        "thread": "Use POSIX threads instead of forking into a process",
     }
     return descriptions

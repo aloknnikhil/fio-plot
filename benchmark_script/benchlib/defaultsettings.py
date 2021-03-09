@@ -8,11 +8,11 @@ def get_default_settings():
     settings = {}
     settings["target"] = []
     settings["template"] = "./fio-job-template.fio"
-    settings["engine"] = "libaio"
-    settings["mode"] = ["randread", "randwrite"]
-    settings["iodepth"] = [1, 2, 4, 8, 16, 32, 64]
-    settings["numjobs"] = [1, 2, 4, 8, 16, 32, 64]
-    settings["block_size"] = ["4k"]
+    settings["engine"] = "/home/ubuntu/spdk/build/fio/spdk_nvme"
+    settings["mode"] = ["write"]
+    settings["iodepth"] = [1, 2, 4, 8, 16, 32]
+    settings["numjobs"] = [1, 2]
+    settings["block_size"] = ["512", "4096", "65536"]
     settings["direct"] = 1
     settings["size"] = None
     settings["precondition"] = False
@@ -28,10 +28,9 @@ def get_default_settings():
     settings["time_based"] = False
     settings["extra_opts"] = []
     settings["loginterval"] = 500
-    settings["mixed"] = ["readwrite", "rw", "randrw"]
+    settings["mixed"] = []
     settings["invalidate"] = 1
     settings["loop_items"] = [
-        "target",
         "mode",
         "iodepth",
         "numjobs",
@@ -55,16 +54,17 @@ def check_settings(settings):
         print()
         sys.exit(6)
 
-    if settings["type"] != "device" and not settings["size"]:
-        print()
-        print("When the target is a file or directory, --size must be specified.")
-        print()
-        sys.exit(4)
+    # if settings["type"] != "device" and not settings["size"]:
+    #     print()
+    #     print("When the target is a file or directory, --size must be specified.")
+    #     print()
+    #     sys.exit(4)
 
     if settings["type"] == "directory":
         for item in settings["target"]:
             if not os.path.exists(item):
-                print(f"\nThe target directory ({item}) doesn't seem to exist.\n")
+                print(
+                    f"\nThe target directory ({item}) doesn't seem to exist.\n")
                 sys.exit(5)
 
     for mode in settings["mode"]:

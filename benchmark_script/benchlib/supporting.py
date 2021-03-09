@@ -19,7 +19,8 @@ def generate_test_list(settings):
 
     benchmark_list = list(itertools.product(*dataset))
     result = [dict(zip(loop_items, item)) for item in benchmark_list]
-    settings["benchmarks"] = len(result)  # Augment display with extra sanity check
+    # Augment display with extra sanity check
+    settings["benchmarks"] = len(result)
     # pprint.pprint(result)
     return result
 
@@ -46,7 +47,7 @@ def generate_output_directory(settings, benchmark):
             f"{benchmark['mode']}{benchmark['rwmixread']}/{benchmark['block_size']}"
         )
     else:
-        directory = f"{settings['output']}/{os.path.basename(benchmark['target'])}/{benchmark['block_size']}"
+        directory = f"{settings['output']}/{benchmark['block_size']}"
 
     if "run" in benchmark.keys():
         directory = directory + f"/run-{benchmark['run']}"
